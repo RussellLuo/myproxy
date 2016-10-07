@@ -22,11 +22,11 @@ class ConfLexer(Lexer):
     def ignore_newline(self, t):
         self.lineno += t.value.count('\n')
 
-    @_(r'\w+\.\w+(\.\w+)?')
+    @_(r'[-a-zA-Z_]+(\.[-a-zA-Z_]+){1,}')
     def domain(self, t):
         return t
 
-    @_(r'(/\w+)+')
+    @_(r'(/[-a-zA-Z_]*)+')
     def path(self, t):
         return t
 
