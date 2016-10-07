@@ -36,9 +36,10 @@ def main():
                              'defaults to "myproxy.conf"')
     args = parser.parse_args()
 
-    manipulation_rules = parse(args.config)
     logging.basicConfig(format='%(asctime)-15s %(levelname)-8s %(message)s',
                         level=args.log_level)
+
+    manipulation_rules = parse(args.config)
     run_proxy(args.host, args.port, manipulation_rules)
 
 

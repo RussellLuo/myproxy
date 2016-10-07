@@ -1,3 +1,4 @@
+import logging
 from collections import OrderedDict
 
 from sly import Lexer, Parser
@@ -93,10 +94,14 @@ class ConfParser(Parser):
 
 
 def parse(conf_filename):
-    with open(conf_filename, 'r') as f:
-        data = f.read()
+    try:
+        with open(conf_filename, 'r') as f:
+            data = f.read()
+    except FileNotFoundError as exc:
+        logging.warning(str(exc))
+        return OrderedDict()
 
     lexer = ConfLexer()
     parser = ConfParser()
     result = parser.parse(lexer.tokenize(data))
-    return result
+    return result or OrderedDict()
